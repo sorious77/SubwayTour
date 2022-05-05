@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore/lite";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,4 +15,12 @@ const firebase = initializeApp(firebaseConfig);
 
 const fireStore = getFirestore(firebase);
 
-export { fireStore };
+const initStation = async (stations) => {
+  stations.map(async (station) => {
+    const stationRef = doc(fireStore, "station", station.station_cd);
+
+    await setDoc(stationRef, { ...station, visited: false });
+  });
+};
+
+export { fireStore, initStation };
