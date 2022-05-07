@@ -9,10 +9,12 @@ const filterLine = (line) => {
   return true;
 };
 
-export default async () => {
+const InitStation = async () => {
   const result = StationInfo.DATA.filter((station) => {
     return filterLine(station.line_num);
   });
 
   initStation(result);
 };
+
+export default InitStation;

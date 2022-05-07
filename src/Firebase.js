@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDocs,
+  collection,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -23,4 +29,10 @@ const initStation = async (stations) => {
   });
 };
 
-export { fireStore, initStation };
+const getAuthUsers = async () => {
+  const userRef = collection(fireStore, "user");
+
+  return await getDocs(userRef);
+};
+
+export { fireStore, initStation, getAuthUsers };

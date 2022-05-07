@@ -1,15 +1,9 @@
-import InitStation from "./InitStation";
+import Route from "./Route";
 
 function App() {
-  const handleInitStation = async () => {
-    const stations = InitStation();
-
-    console.log(stations);
-  };
-
   return (
     <div className="App">
-      <button onClick={handleInitStation}>초기화</button>
+      <Route />
     </div>
   );
 }
