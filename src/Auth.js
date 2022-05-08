@@ -3,7 +3,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut as googleSignOut,
+  onAuthStateChanged,
 } from "firebase/auth";
+import { useEffect } from "react";
 import { getAuthUsers } from "./Firebase";
 
 const provider = new GoogleAuthProvider();
@@ -48,6 +50,17 @@ export const signOut = async (setUser) => {
       console.log("signOut Success!");
     })
     .catch((e) => {
+      console.log(e);
       console.log("signOut failed");
     });
+};
+
+export const Auth = ({ setUser }) => {
+  useEffect(() => {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, [setUser]);
 };
