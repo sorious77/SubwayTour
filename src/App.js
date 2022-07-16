@@ -1,16 +1,35 @@
 import { useState } from "react";
 import { Auth } from "./Auth";
 import Route from "./Route";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styled from "styled-components";
+import { getStations } from "./Firebase";
 
-function App() {
+const Container = styled.div`
+  height: 100%;
+`;
+
+const App = () => {
   const [user, setUser] = useState(null);
+  const [stations, setStations] = useState([]);
+
+  const updateStation = async () => {
+    const stations = await getStations();
+
+    setStations(stations);
+  };
 
   return (
-    <div className="App">
-      <Route user={user} setUser={setUser} />
+    <Container className="App">
+      <Route
+        user={user}
+        setUser={setUser}
+        stations={stations}
+        updateStation={updateStation}
+      />
       <Auth setUser={setUser} />
-    </div>
+    </Container>
   );
-}
+};
 
 export default App;

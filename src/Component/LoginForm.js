@@ -2,21 +2,17 @@ import { signIn, signOut } from "../Auth";
 
 const LoginForm = ({ user, setUser }) => {
   const handleLogin = async () => {
-    signIn(setUser);
-  };
-
-  const handleLogout = async () => {
-    signOut(setUser);
+    if (user) {
+      signOut(setUser);
+    } else {
+      signIn(setUser);
+    }
   };
 
   return (
-    <>
-      {user ? (
-        <button onClick={handleLogout}>Logout</button>
-      ) : (
-        <button onClick={handleLogin}>Login</button>
-      )}
-    </>
+    <div className="btn btn-light" onClick={handleLogin}>
+      {user ? "Logout" : "Login"}
+    </div>
   );
 };
 

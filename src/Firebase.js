@@ -19,11 +19,13 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 
-const fireStore = getFirestore(firebase);
+const fireStore = getFirestore(firebase); // 공식문서의 db 변수
 
 const initStation = async (stations) => {
+  console.log(stations);
+
   stations.map(async (station) => {
-    const stationRef = doc(fireStore, "station", station.station_cd);
+    const stationRef = doc(fireStore, "station", `${station.station_cd}`);
 
     await setDoc(stationRef, { ...station, visited: false });
   });
@@ -35,4 +37,16 @@ const getAuthUsers = async () => {
   return await getDocs(userRef);
 };
 
-export { fireStore, initStation, getAuthUsers };
+const getStations = async () => {
+  const res = await getDocs(collection(fireStore, "station"));
+
+  const stations = [];
+
+  res.forEach((doc) => {
+    stations.push(doc.data());
+  });
+
+  return stations;
+};
+
+export { fireStore, initStation, getAuthUsers, getStations };
