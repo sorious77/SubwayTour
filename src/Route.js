@@ -27,7 +27,7 @@ const Router = ({ user, setUser, stations, updateStation }) => {
                 <Link to="/list" className="btn btn-light">
                   List
                 </Link>
-                <Link to="/board" className="btn btn-light">
+                <Link to="/write" className="btn btn-light">
                   Board
                 </Link>
               </>
@@ -36,7 +36,7 @@ const Router = ({ user, setUser, stations, updateStation }) => {
         </Container>
       </Navbar>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home user={user} />} />
         <Route
           path="/gacha"
           element={
@@ -47,7 +47,6 @@ const Router = ({ user, setUser, stations, updateStation }) => {
             )
           }
         />
-        <Route path="/board" element={user ? <Board /> : <Navigate to="/" />} />
         <Route path="/list" element={user ? <List /> : <Navigate to="/" />} />
         <Route path="/write" element={user ? <Write /> : <Navigate to="/" />} />
         <Route path="*" element={<NotFound />} />
