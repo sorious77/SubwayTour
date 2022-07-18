@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { getStations } from "../Firebase";
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 const Container = styled.div`
   display: flex;
@@ -11,8 +11,12 @@ const Container = styled.div`
 `;
 
 const List = ({ stations }) => {
+  const content = "";
+
   return (
-    <Container>{stations ? <div>Loading...</div> : <div>hi</div>}</Container>
+    <Container>
+      <Viewer initialValue={content} />
+    </Container>
   );
 };
 

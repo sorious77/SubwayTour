@@ -48,7 +48,10 @@ const Router = ({ user, setUser, stations, updateStation }) => {
           }
         />
         <Route path="/list" element={user ? <List /> : <Navigate to="/" />} />
-        <Route path="/write" element={user ? <Write /> : <Navigate to="/" />} />
+        <Route
+          path="/write"
+          element={user ? <Write user={user} /> : <Navigate to="/" />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

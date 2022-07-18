@@ -5,6 +5,8 @@ import {
   setDoc,
   getDocs,
   collection,
+  addDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -49,4 +51,19 @@ const getStations = async () => {
   return stations;
 };
 
-export { fireStore, initStation, getAuthUsers, getStations };
+const uploadNewPost = async (newPost) => {
+  try {
+    const docRef = await addDoc(collection(fireStore, "post"), {
+      ...newPost,
+      createdAt: new Date().toUTCString(),
+    });
+
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+};
+
+export { fireStore, initStation, getAuthUsers, getStations, uploadNewPost };
