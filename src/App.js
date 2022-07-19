@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Auth } from "./Auth";
 import Route from "./Route";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
 import { getStations } from "./Firebase";
 

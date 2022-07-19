@@ -3,10 +3,10 @@ import Home from "./Component/Home";
 import LoginForm from "./Component/LoginForm";
 import NotFound from "./Component/NotFound";
 import Gacha from "./Component/Gacha";
-import Board from "./Component/Board";
 import List from "./Component/List";
 import { Nav, Navbar, NavbarBrand, Container } from "react-bootstrap";
 import Write from "./Component/Write";
+import Post from "./Component/Post";
 
 const Router = ({ user, setUser, stations, updateStation }) => {
   return (
@@ -51,6 +51,10 @@ const Router = ({ user, setUser, stations, updateStation }) => {
         <Route
           path="/write"
           element={user ? <Write user={user} /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/post/:id"
+          element={user ? <Post /> : <Navigate to="/" />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Viewer } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
+import Post from "./Post";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -11,11 +11,11 @@ const Container = styled.div`
 `;
 
 const List = ({ stations }) => {
-  const content = "";
+  const id = "";
 
   return (
     <Container>
-      <Viewer initialValue={content} />
+      <Link to={`/post/${id}`}>View</Link>
     </Container>
   );
 };

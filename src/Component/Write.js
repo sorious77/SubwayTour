@@ -1,7 +1,6 @@
 import { Form, FloatingLabel, Button } from "react-bootstrap";
 import { useRef, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
 import { uploadNewPost } from "../Firebase";
 import { useNavigate } from "react-router-dom";
 

@@ -6,7 +6,7 @@ import {
   getDocs,
   collection,
   addDoc,
-  serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -66,4 +66,27 @@ const uploadNewPost = async (newPost) => {
   return true;
 };
 
-export { fireStore, initStation, getAuthUsers, getStations, uploadNewPost };
+const getPostById = async (id) => {
+  console.log(id);
+
+  try {
+    const docRef = doc(fireStore, "post", id);
+
+    const result = await getDoc(docRef);
+
+    return result.data();
+  } catch (e) {
+    console.log("error occured while retrieve posting");
+
+    return null;
+  }
+};
+
+export {
+  fireStore,
+  initStation,
+  getAuthUsers,
+  getStations,
+  uploadNewPost,
+  getPostById,
+};
