@@ -55,7 +55,6 @@ const uploadNewPost = async (newPost) => {
   try {
     const docRef = await addDoc(collection(fireStore, "post"), {
       ...newPost,
-      createdAt: new Date().toUTCString(),
     });
 
     console.log("Document written with ID: ", docRef.id);
@@ -67,8 +66,6 @@ const uploadNewPost = async (newPost) => {
 };
 
 const getPostById = async (id) => {
-  console.log(id);
-
   try {
     const docRef = doc(fireStore, "post", id);
 
@@ -82,6 +79,18 @@ const getPostById = async (id) => {
   }
 };
 
+const getPosts = async () => {
+  const res = await getDocs(collection(fireStore, "post"));
+
+  const posts = [];
+
+  res.forEach((doc) => {
+    posts.push({ id: doc.id, ...doc.data() });
+  });
+
+  return posts;
+};
+
 export {
   fireStore,
   initStation,
@@ -89,4 +98,5 @@ export {
   getStations,
   uploadNewPost,
   getPostById,
+  getPosts,
 };

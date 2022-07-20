@@ -16,10 +16,34 @@ const Write = ({ user }) => {
     setTitle(value);
   };
 
+  const curTime = () => {
+    const date = new Date();
+    const m = date.getMonth() + 1;
+    const d = date.getDate();
+    const h = date.getHours();
+    const i = date.getMinutes();
+    return (
+      (date.getFullYear() % 100) +
+      "-" +
+      (m > 9 ? m : "0" + m) +
+      "-" +
+      (d > 9 ? d : "0" + d) +
+      " " +
+      (h > 9 ? h : "0" + h) +
+      ":" +
+      (i > 9 ? i : "0" + i)
+    );
+  };
+
   const handleSubmit = async () => {
     const content = contentRef.current?.getInstance().getHTML();
 
-    const newPost = { title, content, author: user.displayName };
+    const newPost = {
+      title,
+      content,
+      author: user.displayName,
+      createdAt: curTime(),
+    };
 
     console.log(newPost);
 
