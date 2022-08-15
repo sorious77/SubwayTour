@@ -7,6 +7,10 @@ import {
   collection,
   addDoc,
   getDoc,
+  query,
+  startAt,
+  limit,
+  orderBy,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -79,10 +83,20 @@ const getPostById = async (id) => {
   }
 };
 
-const getPosts = async () => {
-  const res = await getDocs(collection(fireStore, "post"));
+const getPostCount = async () => {
+  const docRef = collection(fireStore, "post");
+
+  const res = await getDocs(docRef);
+
+  return res.size;
+};
+
+const getPosts = async (page) => {
+  const docRef = collection(fireStore, "post");
+  const q = query(docRef, orderBy("createdAt"), startAt(page * 10), limit(10));
 
   const posts = [];
+  const res = await getDocs(q);
 
   res.forEach((doc) => {
     posts.push({ id: doc.id, ...doc.data() });
@@ -99,4 +113,5 @@ export {
   uploadNewPost,
   getPostById,
   getPosts,
+  getPostCount,
 };

@@ -24,16 +24,12 @@ const Post = () => {
     }
   };
 
-  const title = "Hoang";
-  const content =
-    "<h1>this</h1><p>is</p><p>hoang</p><blockquote><p>world</p></blockquote>";
-
   useEffect(() => {
     getDoc();
   }, []);
 
   return (
-    <Container className="px-4 pt-5 d-flex flex-column align-content-start h-100">
+    <Container className="px-4 py-5 d-flex flex-column align-content-start h-100">
       {loading ? (
         <>Loading...</>
       ) : (

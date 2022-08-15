@@ -57,7 +57,7 @@ const Write = ({ user }) => {
   };
 
   return (
-    <Form className="px-4 pt-5 d-flex flex-column">
+    <Form className="px-4 py-5 d-flex flex-column">
       <FloatingLabel className="mb-3" controlId="title" label="Title">
         <Form.Control
           type="text"
