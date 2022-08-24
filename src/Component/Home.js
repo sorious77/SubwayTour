@@ -14,7 +14,7 @@ const Home = ({ user }) => {
 
   return (
     <Container>
-      <img src="/Home.png" />
+      <img src="/Home.png" alt="홈페이지 사진" />
       {user && <h3>Hello {user.displayName}!</h3>}
     </Container>
   );

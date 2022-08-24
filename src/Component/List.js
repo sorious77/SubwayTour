@@ -30,29 +30,28 @@ const List = () => {
         <>
           <Table striped bordered hover>
             <colgroup>
+              <col width="5%" />
+              <col width="70%" />
               <col width="10%" />
-              <col width="60%" />
-              <col width="15%" />
               <col width="15%" />
             </colgroup>
-
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Date</th>
+                <th className="text-center">Index</th>
+                <th className="px-3">Title</th>
+                <th className="text-center">Author</th>
+                <th className="px-3">Date</th>
               </tr>
             </thead>
             <tbody>
               {posts.map((post, idx) => (
                 <tr key={idx}>
-                  <td className="align-middle">{idx + 1}</td>
-                  <td className="align-middle">
+                  <td className="align-middle text-center">{idx + 1}</td>
+                  <td className="align-middle px-3">
                     <Link to={`/post/${post.id}`}>{post.title}</Link>
                   </td>
-                  <td className="align-middle">{post.author}</td>
-                  <td className="align-middle">{post.createdAt}</td>
+                  <td className="align-middle text-center">{post.author}</td>
+                  <td className="align-middle px-3">{post.createdAt}</td>
                 </tr>
               ))}
             </tbody>

@@ -54,7 +54,7 @@ const Router = ({ user, setUser, stations, updateStation }) => {
         />
         <Route
           path="/post/:id"
-          element={user ? <Post /> : <Navigate to="/" />}
+          element={user ? <Post user={user} /> : <Navigate to="/" />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

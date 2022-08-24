@@ -1,13 +1,14 @@
 import { Form, FloatingLabel, Button } from "react-bootstrap";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import { uploadNewPost } from "../Firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Write = ({ user }) => {
   const [title, setTitle] = useState("");
   const contentRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputTitle = (e) => {
     const {
@@ -41,7 +42,7 @@ const Write = ({ user }) => {
     const newPost = {
       title,
       content,
-      author: user.displayName,
+      // author: user.displayName,
       createdAt: curTime(),
     };
 
@@ -56,6 +57,21 @@ const Write = ({ user }) => {
     }
   };
 
+  useEffect(() => {
+    const loadPost = () => {
+      console.log(location.state);
+      /*
+      console.log(post);
+
+      if (post) {
+        setTitle(post.title);
+        contentRef(post.content);
+      }*/
+    };
+
+    loadPost();
+  }, [title]);
+
   return (
     <Form className="px-4 py-5 d-flex flex-column">
       <FloatingLabel className="mb-3" controlId="title" label="Title">
@@ -67,7 +83,7 @@ const Write = ({ user }) => {
       </FloatingLabel>
       <Editor
         previewStyle="vertical" // 미리보기 스타일 지정
-        height="1000px" // 에디터 창 높이
+        height="65vh" // 에디터 창 높이
         initialEditType="markdown" // 초기 입력모드 설정(디폴트 markdown)
         toolbarItems={[
           // 툴바 옵션 설정

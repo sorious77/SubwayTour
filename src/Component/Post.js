@@ -1,16 +1,17 @@
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Viewer } from "@toast-ui/react-editor";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getPostById } from "../Firebase";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Post = () => {
+const Post = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState("");
   const [post, setPost] = useState({});
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getDoc = async () => {
     const id = location.pathname.substring(6);
@@ -24,6 +25,21 @@ const Post = () => {
     }
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const goEditPage = () => {
+    console.log(post);
+
+    navigate("/write", {
+      state: {
+        user,
+        post,
+      },
+    });
+  };
+
   useEffect(() => {
     getDoc();
   }, []);
@@ -34,8 +50,36 @@ const Post = () => {
         <>Loading...</>
       ) : (
         <>
+          <div
+            className="mb-4"
+            style={{ width: "20px", cursor: "pointer" }}
+            onClick={goBack}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+          </div>
           <h1>{post.title}</h1>
-          <Viewer initialValue={post.content} />
+          <div className="border p-4 rounded my-4" style={{ height: "50vh" }}>
+            <Viewer initialValue={post.content} />
+          </div>
+          <div className="d-flex justify-content-end" style={{ gap: "10px" }}>
+            <Button variant="outline-primary" onClick={goEditPage}>
+              수정
+            </Button>
+            <Button variant="outline-primary">삭제</Button>
+          </div>
         </>
       )}
     </Container>
