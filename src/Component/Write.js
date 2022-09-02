@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const Write = ({ user, post }) => {
   const [title, setTitle] = useState("");
 
+  const titleRef = useRef();
   const contentRef = useRef("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,19 +52,36 @@ const Write = ({ user, post }) => {
       createdAt: curTime(),
     };
 
-    console.log(contentRef.current);
+    try {
+      validate();
+      const result = await uploadNewPost(newPost);
 
-    const result = await uploadNewPost(newPost);
+      if (!result) {
+        alert("An error occurred while posting..");
+      } else {
+        navigate("/list");
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
 
-    if (!result) {
-      alert("An error occurred while posting..");
-    } else {
-      navigate("/list");
+  const validate = () => {
+    if (!title) {
+      throw "제목은 필수입니다.";
+    }
+
+    const content = contentRef.current?.getInstance().getMarkdown();
+
+    if (content.length <= 0) {
+      throw "내용은 필수입니다.";
     }
   };
 
   useEffect(() => {
     const loadPost = () => {
+      titleRef.current.focus();
+
       const post = location.state?.post;
 
       if (post) {
@@ -72,7 +90,7 @@ const Write = ({ user, post }) => {
     };
 
     loadPost();
-  }, [title]);
+  }, []);
 
   return (
     <Form className="px-4 py-5 d-flex flex-column">
@@ -82,6 +100,7 @@ const Write = ({ user, post }) => {
           placeholder="Enter Title"
           onChange={handleInputTitle}
           value={title}
+          ref={titleRef}
         />
       </FloatingLabel>
       <Editor
@@ -98,6 +117,7 @@ const Write = ({ user, post }) => {
         ]}
         ref={contentRef}
         initialValue={location?.state?.post ? location.state.post.content : ""}
+        autofocus={false}
       />
       <div className="mt-3 flex align-self-end">
         <Button variant="outline-primary mx-2" onClick={handleSubmit}>
