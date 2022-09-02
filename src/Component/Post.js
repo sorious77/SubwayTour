@@ -3,7 +3,7 @@ import { Viewer } from "@toast-ui/react-editor";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getPostById } from "../Firebase";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 const Post = ({ user }) => {
   const [loading, setLoading] = useState(true);
@@ -27,17 +27,6 @@ const Post = ({ user }) => {
 
   const goBack = () => {
     navigate(-1);
-  };
-
-  const goEditPage = () => {
-    console.log(post);
-
-    navigate("/write", {
-      state: {
-        user,
-        post,
-      },
-    });
   };
 
   useEffect(() => {
@@ -64,8 +53,8 @@ const Post = ({ user }) => {
               className="w-6 h-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
@@ -75,9 +64,9 @@ const Post = ({ user }) => {
             <Viewer initialValue={post.content} />
           </div>
           <div className="d-flex justify-content-end" style={{ gap: "10px" }}>
-            <Button variant="outline-primary" onClick={goEditPage}>
-              수정
-            </Button>
+            <Link to="/write" state={{ post }}>
+              <Button variant="outline-primary">수정</Button>
+            </Link>
             <Button variant="outline-primary">삭제</Button>
           </div>
         </>

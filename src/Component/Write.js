@@ -4,9 +4,10 @@ import { Editor } from "@toast-ui/react-editor";
 import { uploadNewPost } from "../Firebase";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Write = ({ user }) => {
+const Write = ({ user, post }) => {
   const [title, setTitle] = useState("");
-  const contentRef = useRef();
+
+  const contentRef = useRef("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,6 +16,10 @@ const Write = ({ user }) => {
       target: { value },
     } = e;
     setTitle(value);
+  };
+
+  const goBack = () => {
+    navigate(-1);
   };
 
   const curTime = () => {
@@ -46,7 +51,7 @@ const Write = ({ user }) => {
       createdAt: curTime(),
     };
 
-    console.log(newPost);
+    console.log(contentRef.current);
 
     const result = await uploadNewPost(newPost);
 
@@ -59,14 +64,11 @@ const Write = ({ user }) => {
 
   useEffect(() => {
     const loadPost = () => {
-      console.log(location.state);
-      /*
-      console.log(post);
+      const post = location.state?.post;
 
       if (post) {
-        setTitle(post.title);
-        contentRef(post.content);
-      }*/
+        setTitle(post?.title);
+      }
     };
 
     loadPost();
@@ -79,6 +81,7 @@ const Write = ({ user }) => {
           type="text"
           placeholder="Enter Title"
           onChange={handleInputTitle}
+          value={title}
         />
       </FloatingLabel>
       <Editor
@@ -94,14 +97,16 @@ const Write = ({ user }) => {
           ["code", "codeblock"],
         ]}
         ref={contentRef}
+        initialValue={location?.state?.post ? location.state.post.content : ""}
       />
-      <Button
-        className="mt-3 align-self-end"
-        variant="outline-primary"
-        onClick={handleSubmit}
-      >
-        Submit
-      </Button>
+      <div className="mt-3 flex align-self-end">
+        <Button variant="outline-primary mx-2" onClick={handleSubmit}>
+          Submit
+        </Button>
+        <Button variant="outline-primary" onClick={goBack}>
+          Cancle
+        </Button>
+      </div>
     </Form>
   );
 };
