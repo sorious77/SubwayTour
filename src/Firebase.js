@@ -11,6 +11,7 @@ import {
   startAt,
   limit,
   orderBy,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -69,6 +70,23 @@ const uploadNewPost = async (newPost) => {
   return true;
 };
 
+const updatePost = async (post) => {
+  console.log(post);
+
+  try {
+    const docRef = await updateDoc(doc(fireStore, "post", post.id), {
+      title: post.title,
+      updatedAt: post.updatedAt,
+      content: post.content,
+    });
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+
+  return true;
+};
+
 const getPostById = async (id) => {
   try {
     const docRef = doc(fireStore, "post", id);
@@ -114,4 +132,5 @@ export {
   getPostById,
   getPosts,
   getPostCount,
+  updatePost,
 };

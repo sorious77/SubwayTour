@@ -14,14 +14,16 @@ const Post = ({ user }) => {
   const navigate = useNavigate();
 
   const getDoc = async () => {
-    const id = location.pathname.substring(6);
+    const {
+      state: { id },
+    } = location;
     setId(id);
 
     const result = await getPostById(id);
 
     if (result) {
       setLoading(false);
-      setPost(result);
+      setPost({ ...result, id });
     }
   };
 
@@ -31,6 +33,7 @@ const Post = ({ user }) => {
 
   useEffect(() => {
     getDoc();
+    console.log(location.state);
   }, []);
 
   return (

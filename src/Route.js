@@ -53,7 +53,7 @@ const Router = ({ user, setUser, stations, updateStation }) => {
           element={user ? <Write user={user} /> : <Navigate to="/" />}
         />
         <Route
-          path="/post/:id"
+          path="/post/detail"
           element={user ? <Post user={user} /> : <Navigate to="/" />}
         />
         <Route path="*" element={<NotFound />} />

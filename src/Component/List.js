@@ -48,10 +48,14 @@ const List = () => {
                 <tr key={idx}>
                   <td className="align-middle text-center">{idx + 1}</td>
                   <td className="align-middle px-3">
-                    <Link to={`/post/${post.id}`}>{post.title}</Link>
+                    <Link to="/post/detail" state={{ id: post.id }}>
+                      {post.title}
+                    </Link>
                   </td>
                   <td className="align-middle text-center">{post.author}</td>
-                  <td className="align-middle px-3">{post.createdAt}</td>
+                  <td className="align-middle px-3">
+                    {post.updatedAt ? post.updatedAt : post.createdAt}
+                  </td>
                 </tr>
               ))}
             </tbody>

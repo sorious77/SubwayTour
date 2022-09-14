@@ -1,11 +1,13 @@
 import { Form, FloatingLabel, Button } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
-import { uploadNewPost } from "../Firebase";
+import { updatePost, uploadNewPost } from "../Firebase";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Write = ({ user, post }) => {
+const Write = ({ user }) => {
   const [title, setTitle] = useState("");
+  const [isNewPost, setIsNewPost] = useState(true);
+  const [id, setId] = useState("");
 
   const titleRef = useRef();
   const contentRef = useRef("");
@@ -45,16 +47,21 @@ const Write = ({ user, post }) => {
   const handleSubmit = async () => {
     const content = contentRef.current?.getInstance().getHTML();
 
-    const newPost = {
+    let post = {
       title,
       content,
-      // author: user.displayName,
-      createdAt: curTime(),
+      author: user.displayName,
     };
+
+    if (isNewPost) {
+      post["createdAt"] = curTime();
+    } else {
+      post["updatedAt"] = curTime();
+    }
 
     try {
       validate();
-      const result = await uploadNewPost(newPost);
+      const result = await uploadPost(post);
 
       if (!result) {
         alert("An error occurred while posting..");
@@ -63,6 +70,14 @@ const Write = ({ user, post }) => {
       }
     } catch (e) {
       alert(e);
+    }
+  };
+
+  const uploadPost = async (post) => {
+    if (isNewPost) {
+      return await uploadNewPost(post);
+    } else {
+      return await updatePost({ ...post, id });
     }
   };
 
@@ -84,8 +99,12 @@ const Write = ({ user, post }) => {
 
       const post = location.state?.post;
 
+      console.log(post);
+
       if (post) {
         setTitle(post?.title);
+        setId(post.id);
+        setIsNewPost(false);
       }
     };
 
