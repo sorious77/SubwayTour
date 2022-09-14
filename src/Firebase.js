@@ -71,8 +71,6 @@ const uploadNewPost = async (newPost) => {
 };
 
 const updatePost = async (post) => {
-  console.log(post);
-
   try {
     const docRef = await updateDoc(doc(fireStore, "post", post.id), {
       title: post.title,
@@ -80,7 +78,6 @@ const updatePost = async (post) => {
       content: post.content,
     });
   } catch (e) {
-    console.log(e);
     return false;
   }
 

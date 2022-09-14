@@ -27,9 +27,6 @@ const Router = ({ user, setUser, stations, updateStation }) => {
                 <Link to="/list" className="btn btn-light">
                   List
                 </Link>
-                <Link to="/write" className="btn btn-light">
-                  Board
-                </Link>
               </>
             )}
           </Nav>

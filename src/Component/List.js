@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { getPosts, getPostCount } from "../Firebase";
 import { useState, useEffect } from "react";
-import { Container, Table, Pagination } from "react-bootstrap";
+import { Container, Table, Pagination, Button } from "react-bootstrap";
 
 const List = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +28,9 @@ const List = () => {
         <>Loading...</>
       ) : (
         <>
+          <Link to="/write" className="align-self-end mb-4">
+            <Button variant="outline-primary">글쓰기</Button>
+          </Link>
           <Table striped bordered hover>
             <colgroup>
               <col width="5%" />
