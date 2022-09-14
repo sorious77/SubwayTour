@@ -1,11 +1,10 @@
 import { Button, Container } from "react-bootstrap";
 import { Viewer } from "@toast-ui/react-editor";
-import { useState } from "react";
-import { useEffect } from "react";
-import { getPostById } from "../Firebase";
+import { useState, useEffect } from "react";
+import { getPostById, deletePost } from "../Firebase";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 
-const Post = ({ user }) => {
+const Post = () => {
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState("");
   const [post, setPost] = useState({});
@@ -29,6 +28,12 @@ const Post = ({ user }) => {
 
   const goBack = () => {
     navigate(-1);
+  };
+
+  const handleDelete = async () => {
+    // 진짜 삭제?
+
+    deletePost(id);
   };
 
   useEffect(() => {

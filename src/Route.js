@@ -1,12 +1,12 @@
 import { Link, Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import Home from "./Component/Home";
+import Home from "./Pages/Home";
 import LoginForm from "./Component/LoginForm";
-import NotFound from "./Component/NotFound";
-import Gacha from "./Component/Gacha";
-import List from "./Component/List";
+import NotFound from "./Pages/NotFound";
+import Gacha from "./Pages/Gacha";
+import List from "./Pages/List";
 import { Nav, Navbar, NavbarBrand, Container } from "react-bootstrap";
-import Write from "./Component/Write";
-import Post from "./Component/Post";
+import Write from "./Pages/Write";
+import Post from "./Pages/Post";
 
 const Router = ({ user, setUser, stations, updateStation }) => {
   return (
