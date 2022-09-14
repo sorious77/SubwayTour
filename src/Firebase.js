@@ -12,6 +12,7 @@ import {
   limit,
   orderBy,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -84,6 +85,17 @@ const updatePost = async (post) => {
   return true;
 };
 
+const deletePost = async (id) => {
+  try {
+    const docRef = await deleteDoc(doc(fireStore, "post", id));
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+
+  return true;
+};
+
 const getPostById = async (id) => {
   try {
     const docRef = doc(fireStore, "post", id);
@@ -130,4 +142,5 @@ export {
   getPosts,
   getPostCount,
   updatePost,
+  deletePost,
 };

@@ -1,13 +1,15 @@
 import { Button, Container } from "react-bootstrap";
 import { Viewer } from "@toast-ui/react-editor";
 import { useState, useEffect } from "react";
-import { getPostById, deletePost } from "../Firebase";
+import { getPostById } from "../Firebase";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import DeleteModal from "../Component/DeleteModal";
 
 const Post = () => {
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState("");
   const [post, setPost] = useState({});
+  const [show, setShow] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,8 +34,8 @@ const Post = () => {
 
   const handleDelete = async () => {
     // 진짜 삭제?
-
-    deletePost(id);
+    setShow(true);
+    // deletePost(id);
   };
 
   useEffect(() => {
@@ -75,7 +77,10 @@ const Post = () => {
             <Link to="/write" state={{ post }}>
               <Button variant="outline-primary">수정</Button>
             </Link>
-            <Button variant="outline-primary">삭제</Button>
+            <Button onClick={handleDelete} variant="outline-primary">
+              삭제
+            </Button>
+            <DeleteModal show={show} setShow={setShow} id={id} />
           </div>
         </>
       )}
