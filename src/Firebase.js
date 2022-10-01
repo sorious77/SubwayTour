@@ -13,6 +13,8 @@ import {
   orderBy,
   updateDoc,
   deleteDoc,
+  endBefore,
+  startAfter,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -118,9 +120,15 @@ const getPostCount = async () => {
   return res.size;
 };
 
-const getPosts = async (page) => {
+const getPosts = async (time) => {
   const docRef = collection(fireStore, "post");
-  const q = query(docRef, orderBy("createdAt"), startAt(page * 10), limit(10));
+  const q = query(
+    docRef,
+    orderBy("createdAt"),
+    startAfter(time),
+    // startAt((page - 1) * 10),
+    limit(10)
+  );
 
   const posts = [];
   const res = await getDocs(q);

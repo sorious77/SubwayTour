@@ -1,25 +1,79 @@
 import { Link } from "react-router-dom";
-import { getPosts, getPostCount } from "../Firebase";
+import { fireStore } from "../Firebase";
 import { useState, useEffect } from "react";
-import { Container, Table, Pagination, Button } from "react-bootstrap";
+import { Container, Pagination, Button } from "react-bootstrap";
+import Pages from "../Component/Pages";
+import Lists from "../Component/Lists";
+import { collection, query, onSnapshot } from "firebase/firestore";
 
 const List = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [size, setSize] = useState(0);
-  const [page, setPage] = useState(1);
+  const [curPosts, setCurPosts] = useState([]);
+  const [active, setActive] = useState(1);
+  const [pages, setPages] = useState([]);
 
-  const getPostLists = async () => {
-    const posts = await getPosts(page);
-    const size = await getPostCount();
+  const handleMovePage = async ({ target: { id: page } }) => {
+    console.log(page);
 
-    setPosts(posts);
-    setLoading(false);
-    setSize(size);
+    pagination(posts, +page);
+  };
+
+  const prevPage = () => {
+    if (active === 1) {
+      return;
+    }
+
+    pagination(posts, active - 1);
+  };
+
+  const nextPage = () => {
+    if (active === Math.round(51 / 10) + 1) {
+      return;
+    }
+
+    pagination(posts, active + 1);
+  };
+
+  const pagination = (posts, activePage = 1) => {
+    const pages = [];
+
+    const size = posts.length;
+
+    setActive(activePage);
+    setCurPosts(posts.slice((activePage - 1) * 10, activePage * 10));
+
+    console.log(size, activePage, curPosts);
+
+    for (let i = 0; i <= Math.round(size / 10); i++) {
+      pages.push(
+        <Pagination.Item
+          key={i}
+          active={activePage === i + 1}
+          onClick={handleMovePage}
+          id={i + 1}
+        >
+          {i + 1}
+        </Pagination.Item>
+      );
+    }
+
+    setPages(pages);
   };
 
   useEffect(() => {
-    getPostLists();
+    const q = query(collection(fireStore, "post"));
+
+    onSnapshot(q, (snapshot) => {
+      const posts = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(posts);
+      setPosts(posts);
+      pagination(posts, 1);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -31,45 +85,20 @@ const List = () => {
           <Link to="/write" className="align-self-end mb-4">
             <Button variant="outline-primary">글쓰기</Button>
           </Link>
-          <Table striped bordered hover>
-            <colgroup>
-              <col width="5%" />
-              <col width="70%" />
-              <col width="10%" />
-              <col width="15%" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th className="text-center">Index</th>
-                <th className="px-3">Title</th>
-                <th className="text-center">Author</th>
-                <th className="px-3">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {posts.map((post, idx) => (
-                <tr key={idx}>
-                  <td className="align-middle text-center">{idx + 1}</td>
-                  <td className="align-middle px-3">
-                    <Link to="/post/detail" state={{ id: post.id }}>
-                      {post.title}
-                    </Link>
-                  </td>
-                  <td className="align-middle text-center">{post.author}</td>
-                  <td className="align-middle px-3">
-                    {post.updatedAt ? post.updatedAt : post.createdAt}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Pagination className="align-self-center">
-            <Pagination.Prev />
-            <Pagination.Item key={1} active={1 === 1}>
-              1
-            </Pagination.Item>
-            <Pagination.Next />
-          </Pagination>
+          <Lists posts={curPosts} active={active} />
+          <Pages
+            className="align-self-center"
+            pages={pages}
+            prevPage={prevPage}
+            nextPage={nextPage}
+          />
+          <Button
+            onClick={() => {
+              console.log(posts);
+            }}
+          >
+            Log
+          </Button>
         </>
       )}
     </Container>
