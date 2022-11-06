@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Lists = ({ active, posts }) => {
+const Lists = ({ posts }) => {
   return (
     <Table striped bordered hover>
       <colgroup>
@@ -21,14 +21,9 @@ const Lists = ({ active, posts }) => {
       <tbody>
         {posts.map((post, idx) => (
           <tr key={idx}>
-            <td className="align-middle text-center">
-              {(active - 1) * 10 + idx + 1}
-            </td>
+            <td className="align-middle text-center">{idx + 1}</td>
             <td className="align-middle px-3">
-              <Link
-                to={`/post/detail/${(active - 1) * 10 + idx + 1}`}
-                state={{ id: post.id }}
-              >
+              <Link to={`/post/detail/${idx + 1}`} state={{ id: post.id }}>
                 {post.title}
               </Link>
             </td>
