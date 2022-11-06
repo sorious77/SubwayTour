@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/SubwayTour/static/css/main.69019a6d.css",
-    "main.js": "/SubwayTour/static/js/main.d5e3715f.js",
+    "main.js": "/SubwayTour/static/js/main.e3d5f468.js",
     "static/media/index.cjs": "/SubwayTour/static/media/index.1e3d64b0fcde879f0060.cjs",
     "index.html": "/SubwayTour/index.html",
     "main.69019a6d.css.map": "/SubwayTour/static/css/main.69019a6d.css.map",
-    "main.d5e3715f.js.map": "/SubwayTour/static/js/main.d5e3715f.js.map"
+    "main.e3d5f468.js.map": "/SubwayTour/static/js/main.e3d5f468.js.map"
   },
   "entrypoints": [
     "static/css/main.69019a6d.css",
-    "static/js/main.d5e3715f.js"
+    "static/js/main.e3d5f468.js"
   ]
 }
