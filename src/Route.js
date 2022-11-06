@@ -10,7 +10,7 @@ import Post from "./Pages/Post";
 
 const Router = ({ user, setUser, stations, updateStation }) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Navbar bg="light" variant="light">
         <Container fluid className="mx-3">
           <NavbarBrand>Subway Tour</NavbarBrand>
